@@ -4,7 +4,6 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "mongo": "node src/models/connection.js",
     "start": "nodemon src/server.js"
   },
   "keywords": [],
