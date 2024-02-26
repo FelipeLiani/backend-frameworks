@@ -1,7 +1,7 @@
 const express = require('express');
-const database = require('./models/connection')
+const database = require('./mongo/connection')
 const cors = require('cors');
-const router = require('./router');
+const router = require('./routes/index');
 const app = express();
 
 database.on('error', (err) => {

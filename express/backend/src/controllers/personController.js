@@ -1,8 +1,4 @@
-const Model = require('../models/model');
-
-const getHelloWorld = (_req, res) => {
-  return res.status(200).json({"resposta" : "hello world"})
-}
+const Model = require('../mongo/schemas/personSchema');
 
 const getAllPersons = async (_req, res) => {
   try {
@@ -52,10 +48,42 @@ const patchPersonByID = async (req, res) => {
       }
 }
 
+const deletePersonByID = async (req, res) => {
+  try {
+          const id = req.params.id;
+          const data = await Model.findByIdAndDelete(id)
+          res.send(`person ${data.nome} has been deleted..`)
+      }
+      catch (err) {
+          res.status(400).json({ message: err.message })
+      }
+}
+
+const putPersonByID = async (req, res) => {
+  try {
+          const id = req.params.id;
+          const atualizacao = req.body;
+          const options = { new: true };
+
+          const result = await Model.findByIdAndUpdate(
+            id, atualizacao, options
+          );
+          if (!result) {
+                return res.status(404).json({ mensagem: 'Documento não encontrado.' });
+              }
+          res.json(result);
+
+  } catch (err) {
+          res.status(500).json({ mensagem: 'Erro ao atualizar documento.' });
+          console.log(err)
+  }
+}
+
 module.exports = {
-  getHelloWorld,
   getAllPersons,
   getPersonByID,
   postNewPerson,
-  patchPersonByID
+  patchPersonByID,
+  deletePersonByID,
+  putPersonByID
 }
