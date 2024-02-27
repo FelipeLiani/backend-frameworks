@@ -1,2 +1,3 @@
 express/backend/.env
+fastify/backend/.env
 express/backend/node_modules
