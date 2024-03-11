@@ -3,13 +3,14 @@ require('dotenv').config();
 const fastify = require('fastify')({
   logger: true
 })
+const routes = require("./routes/index");
 
 mongoose.connect(process.env.DATABASE_URL)
 .then(() => console.log("MongoDB connected…"))
 .catch(err => console.log(err))
 
-fastify.get('/', async (_req, _res) => {
-  return { hello: 'world' }
+routes.forEach((route) => {
+ fastify.route(route)
 })
 
 const start = async () => {
